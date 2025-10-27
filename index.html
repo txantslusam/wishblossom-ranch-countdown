@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishblossom Ranch - Countdown!</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Basic styles and background */
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            color: white;
+            overflow: hidden; /* Prevents scrolling */
+        }
+
+        body {
+            /* NEW: Animated gradient based on #3f48ac */
+            background: linear-gradient(-45deg, #1a1d3b, #3f48ac, #2a307a, #5c67d9);
+            background-image: url(/assets/ddv_banner.png);
+            background-size: cover;
+            background-position: 50% 50%;
+            
+            /* Center content */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+            padding: 20px; /* Add some padding for smaller screens */
+            box-sizing: border-box;
+        }
+
+        /* Main container for the countdown */
+        .container {
+            background: rgba(0, 0, 0, 0.55); /* Slightly transparent for readability */
+            padding: 40px 50px;
+            border-radius: 20px;
+            
+            border: 2px solid rgba(255, 226, 155, 0.7); 
+            box-shadow: 0 0 30px rgba(128, 139, 230, 0.7),
+                        0 0 15px rgba(255, 226, 155, 0.5) inset; 
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Expansion Title */
+        h1 {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 3.5rem; /* Large font */
+            color: #FFE29B; /* UPDATED: New Yellow */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* UPDATED: Darker shadow for contrast */
+            margin: 0;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            font-size: 1.2rem;
+            color: #e8eaff; /* UPDATED: Light blueish-white */
+            margin-top: 5px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+        
+        /* Text above timer */
+        .pre-timer-text {
+            font-size: 1.6rem;
+            color: #e8eaff; /* UPDATED: Light blueish-white */
+            font-weight: 700;
+            margin-top: 10px;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Container for timer boxes */
+        #countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap; /* Wraps on smaller screens */
+        }
+
+        /* Single time box (e.g., Days) */
+        .time-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 226, 155, 0.5); /* UPDATED: New Yellow */
+            border-radius: 10px;
+            padding: 20px;
+            min-width: 100px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        /* Number styling */
+        .time-box span {
+            display: block;
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        /* Label styling (Days, Hours...) */
+        .time-box .label {
+            font-size: 1.2rem;
+            color: #FFE29B; /* UPDATED: New Yellow */
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        
+        /* Message after countdown finishes */
+        #finished-message {
+            display: none; /* Hidden by default */
+        }
+        #finished-message h3 {
+             font-family: 'Cinzel Decorative', cursive;
+             font-size: 2.5rem;
+             color: #90ee90; /* Light green */
+             text-shadow: 1px 1px 2px #000;
+        }
+        
+        /* Link below timer */
+        .more-info-link {
+            display: inline-block;
+            margin-top: 30px;
+            font-size: 1.4rem;
+            color: #FFE29B; /* UPDATED: New Yellow */
+            text-decoration: none;
+            border: 1px solid rgba(255, 226, 155, 0.5); /* UPDATED: New Yellow */
+            padding: 10px 20px;
+            border-radius: 50px; /* Pill shape */
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+
+        .more-info-link:hover {
+            background: rgba(255, 226, 155, 0.8); /* UPDATED: New Yellow */
+            color: #3f48ac; /* UPDATED: New Main Blue */
+            box-shadow: 0 0 15px rgba(255, 226, 155, 0.7); /* UPDATED: New Yellow */
+        }
+
+        @media (min-width: 1000px) {
+            .logo-image {
+                width: 30vw;
+            }
+        }
+
+        .logo-image {
+            max-width: 340px;
+            min-width: 210px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            width: 60vw;
+        }
+        
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            .container {
+                padding: 30px 20px;
+            }
+            .time-box {
+                min-width: 70px;
+                padding: 15px 10px;
+            }
+            .time-box span {
+                font-size: 2rem;
+            }
+            .time-box .label {
+                font-size: 0.8rem;
+            }
+            .pre-timer-text {
+                font-size: 1.2rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <img class="logo-image" src="/assets/logo.png" />
+    <div class="container">
+        <p class="pre-timer-text">A new adventure begins in:</p>
+
+        <div id="countdown">
+            <div class="time-box">
+                <span id="days">00</span>
+                <span class="label">Days</span>
+            </div>
+            <div class="time-box">
+                <span id="hours">00</span>
+                <span class="label">Hours</span>
+            </div>
+            <div class="time-box">
+                <span id="minutes">00</span>
+                <span class="label">Minutes</span>
+            </div>
+            <div class="time-box">
+                <span id="seconds">00</span>
+                <span class="label">Seconds</span>
+            </div>
+        </div>
+
+        <div id="finished-message">
+            <h3>The magic is here! Enjoy the game!</h3>
+        </div>
+
+        <a class="more-info-link" href="https://disneydreamlightvalley.com/expansion/wishblossom-ranch" target="_blank">
+            Learn more about the expansion here
+        </a>
+
+        
+    </div>
+
+    <script>
+        let interval;
+        // Set the target date (November 19, 2025, 13:00 UTC+0).
+        const countdownDate = new Date("2025-11-19T13:00:00.000Z").getTime();
+
+
+        // Get elements to display time
+        const daysEl = document.getElementById("days");
+        const hoursEl = document.getElementById("hours");
+        const minutesEl = document.getElementById("minutes");
+        const secondsEl = document.getElementById("seconds");
+        
+        // Get elements to hide/show
+        const countdownEl = document.getElementById("countdown");
+        const finishedEl = document.getElementById("finished-message");
+        const preTimerTextEl = document.querySelector(".pre-timer-text");
+        const moreInfoLinkEl = document.querySelector(".more-info-link");
+
+        const timerFn = function() {
+
+            // Get today's date and time
+            const now = new Date().getTime();
+
+            // Find the time difference between now and the target date
+            const distance = countdownDate - now;
+
+            // Time calculations for days, hours, minutes, and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the elements
+            // Use .padStart(2, '0') to always show two digits (e.g., 09 instead of 9)
+            daysEl.innerText = String(days).padStart(2, '0');
+            hoursEl.innerText = String(hours).padStart(2, '0');
+            minutesEl.innerText = String(minutes).padStart(2, '0');
+            secondsEl.innerText = String(seconds).padStart(2, '0');
+
+            // If the countdown is finished
+            if (distance < 0) {
+                clearInterval(interval);
+                countdownEl.style.display = "none"; // Hide timer
+                preTimerTextEl.style.display = "none"; // Hide pre-timer text
+                finishedEl.style.display = "block"; // Show finished message
+            }
+        }
+
+        timerFn();
+        // Update the countdown every 1 second
+        interval = setInterval(timerFn, 1000); // 1000ms = 1 second
+    </script>
+
+</body>
+</html>
